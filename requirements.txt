@@ -1,0 +1,4 @@
+pyspark==4.0.0
+pyarrow==20.0.0
+grpcio==1.73.1
+grpcio-status==1.73.1
