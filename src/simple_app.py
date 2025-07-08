@@ -1,6 +1,7 @@
 import logging
-import os
+from datetime import date, datetime
 
+from pyspark import Row
 from pyspark.sql import SparkSession
 
 
@@ -8,19 +9,15 @@ def run_job():
     logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s %(levelname)s - %(message)s')
     logger = logging.getLogger(__name__)
 
-    spark_home = os.getenv("SPARK_HOME")
-    if not spark_home:
-        logger.info("SPARK_HOME not set")
-        exit(1)
-
-    log_file = spark_home + "/README.md"
     spark = SparkSession.builder.appName("simple-app").getOrCreate()
-    log_data = spark.read.text(log_file).cache()
+    df = spark.createDataFrame([
+        Row(a=1, b=2., c='string1', d=date(2000, 1, 1), e=datetime(2000, 1, 1, 12, 0)),
+        Row(a=2, b=3., c='string2', d=date(2000, 2, 1), e=datetime(2000, 1, 2, 12, 0)),
+        Row(a=4, b=5., c='string3', d=date(2000, 3, 1), e=datetime(2000, 1, 3, 12, 0))
+    ])
+    logger.info("DataFrame created with %i rows" % df.count())
+    df.show()
 
-    num_a = log_data.filter(log_data.value.contains('a')).count()
-    num_b = log_data.filter(log_data.value.contains('b')).count()
-
-    logger.info("Lines with a: %i, lines with b: %i" % (num_a, num_b))
     spark.stop()
 
 
