@@ -1,0 +1,38 @@
+name: Build
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Set up Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - name: Install Spark
+        run: |
+          wget -q https://archive.apache.org/dist/spark/spark-4.0.0/spark-4.0.0-bin-hadoop3.tgz
+          tar -xzf spark-4.0.0-bin-hadoop3.tgz
+          echo "SPARK_HOME=$PWD/spark-4.0.0-bin-hadoop3" >> $GITHUB_ENV
+          echo "$PWD/spark-4.0.0-bin-hadoop3/bin" >> $GITHUB_PATH
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Run simple_app via spark-submit
+        run: spark-submit --master "local[*]" src/simple_app.py
