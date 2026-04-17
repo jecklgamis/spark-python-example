@@ -1,5 +1,7 @@
 ## Spark Python Example
 
+[![Build](https://github.com/jecklgamis/spark-python-example/actions/workflows/build.yaml/badge.svg)](https://github.com/jecklgamis/spark-python-example/actions/workflows/build.yaml)
+
 This repo contains example Spark jobs in Python.
 
 ## Requirements
