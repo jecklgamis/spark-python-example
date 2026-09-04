@@ -4,12 +4,12 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-Example Apache Spark 4.0 jobs written in Python (PySpark). Two execution modes: local spark-submit and Spark Connect (client-server).
+Example Apache Spark 4.2 jobs written in Python (PySpark). Two execution modes: local spark-submit and Spark Connect (client-server).
 
 ## Prerequisites
 
 - Python 3
-- Apache Spark 4.0.0 installed with `SPARK_HOME` and `PATH` configured
+- Apache Spark 4.2.0 installed with `SPARK_HOME` and `PATH` configured
 
 ## Commands
 
